@@ -32,3 +32,6 @@ conda-meta/
 
 # Environment variables
 .env
+
+testing/
+model/
