@@ -13,7 +13,7 @@ def is_validate(image_path):
         "model/face_detection/face_detection_yunet_2026may.onnx", 
         "", 
         (width, height),
-        0.8,
+        0.6,
         0.3,
         5000
     )
@@ -24,11 +24,6 @@ def is_validate(image_path):
     # 3. Image blur verification
     # Convert the image to grayscale so that changes in pixel intensity can be detected more easily. These changes represent edges in the image and can be used to determine whether the image is sharp or blurry.
     gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
-    # Use the Laplacian to detect edges by identifying significant changes in grayscale pixel intensity. Sharp images typically contain stronger and more distinct intensity changes, while blurry images tend to have smoother and less significant changes.
-    blur_score = cv2.Laplacian(gray_img, cv2.CV_64F).var()
-    if blur_score > 70:
-        raise ValueError("Image is blurry. Please re-upload a clear image.")
 
     # 4. Image brightness verification
     if gray_img.mean() < 40:
