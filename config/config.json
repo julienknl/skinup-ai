@@ -1,0 +1,14 @@
+{
+    "data_path" : "data/skincare_products/",
+    "product_path" : "data/skincare_products/products.csv",
+    "most_common_ing_count" : 100,
+    "ingredient_knowledge_path" : "data/skincare_products/cleaned_common_ingredients_knowledge_v3.csv",
+    "aliases" : "data/skincare_products/aliases.json",
+    "recommended_role_scores" : {
+        "beneficial" : 2,
+        "supportive" : 1,
+        "neutral" : 0,
+        "caution" : -1,
+        "avoid" : -2
+    }
+}

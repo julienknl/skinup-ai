@@ -2,18 +2,8 @@ from pathlib import Path
 import pandas as pd
 import json
 
-CONFIG = {
-    "product_path" : "data/skincare_products/products.csv",
-    "ingredient_knowledge_path" : "data/skincare_products/cleaned_common_ingredients_knowledge_v3.csv",
-    "aliases" : "data/skincare_products/aliases.json",
-    "recommended_role_scores" : {
-        "beneficial" : 2,
-        "supportive" : 1,
-        "neutral" : 0,
-        "caution" : -1,
-        "avoid" : -2
-    }
-}
+with open("config/config.json", "r") as config:
+    CONFIG = json.load(config)
 
 def __clean_ingredients(ingredients):
     with open(CONFIG.get("aliases"), "r", encoding="utf-8") as file:

@@ -1,34 +1,13 @@
 from pathlib import Path
 import pandas as pd
 from collections import Counter
+import json
 
-CONFIG = {
-    "path" : "data/skincare_products/",
-    "korean_brands" : ["COSRX",
-        "Beauty of Joseon",
-        "Anua",
-        "Torriden",
-        "Round Lab",
-        "SKIN1004",
-        "Innisfree",
-        "Laneige",
-        "Dr. Jart+",
-        "Etude",
-        "Isntree",
-        "Purito",
-        "Some By Mi",
-        "Aestura",
-        "Illiyoon",
-        "Pyunkang Yul",
-        "Mediheal",
-        "Missha",
-        "Sulwhasoo",
-        "Klairs",],
-    "most_common_ing_count" : 100,
-}
+with open("config/config.json", "r") as config:
+    CONFIG = json.load(config)
 
 def start_preprocessing():
-    folder = Path(CONFIG.get("path"))
+    folder = Path(CONFIG.get("data_path"))
 
     dataframes = []
 
@@ -52,7 +31,7 @@ def __get_common_ingredients(dataset):
     most_commons_ing = ing_counts.most_common(CONFIG.get("most_common_ing_count"))
 
     df = pd.DataFrame(most_commons_ing, columns=["ingredients", "count"])
-    df.to_csv(CONFIG.get("path") + "common_ingredients.csv", index=False)
+    df.to_csv(CONFIG.get("data_path") + "common_ingredients.csv", index=False)
 
 def __cleaning_common_ingredients(dataset):
     aliases = {
@@ -81,12 +60,12 @@ def __cleaning_common_ingredients(dataset):
     int_values = pd.to_numeric(dataset["ingredients"], errors="coerce").notna()
 
     dataset = dataset[~int_values]
-    dataset.to_csv(CONFIG.get("path") + "cleaned_common_ingredients.csv", index=False)
+    dataset.to_csv(CONFIG.get("data_path") + "cleaned_common_ingredients.csv", index=False)
 
 
 if __name__ == "__main__":
 
-    products_path = Path(CONFIG.get("path") + "products.csv")
+    products_path = Path(CONFIG.get("product_path"))
 
     print("Verifying if product file already exist..")
     if not products_path.exists():
@@ -99,5 +78,5 @@ if __name__ == "__main__":
         products = pd.read_csv(products_path)
         __get_common_ingredients(products)
         print("Raw knowledge base created..Cleaning the data..")
-        __cleaning_common_ingredients(pd.read_csv(CONFIG.get("path") + "common_ingredients.csv"))
+        __cleaning_common_ingredients(pd.read_csv(CONFIG.get("data_path") + "common_ingredients.csv"))
         print("Ingredient knowledge base created.")
