@@ -10,5 +10,6 @@
         "neutral" : 0,
         "caution" : -1,
         "avoid" : -2
-    }
+    },
+    "skin_condition_identifier_threshold" : 0.60
 }

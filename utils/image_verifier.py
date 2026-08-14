@@ -8,29 +8,15 @@ def is_validate(image_path):
     if height < 512 and width < 512:
         raise ValueError("Image resolution too small. Please re-upload a high resolution image.")
 
-    # 2. Face detection
-    face_detector = cv2.FaceDetectorYN.create(
-        "model/face_detection/face_detection_yunet_2026may.onnx", 
-        "", 
-        (width, height),
-        0.6,
-        0.3,
-        5000
-    )
-    _, faces = face_detector.detect(img)
-    if faces is None:
-        raise ValueError("No faces detected. Please upload an image with your face.")
-
-    # 3. Image blur verification
+    # 2. Image blur verification
     # Convert the image to grayscale so that changes in pixel intensity can be detected more easily. These changes represent edges in the image and can be used to determine whether the image is sharp or blurry.
     gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    # 4. Image brightness verification
+    # 3. Image brightness verification
     if gray_img.mean() < 40:
         raise ValueError("Image too dark. Please re-upload a clear picture.")
     elif gray_img.mean() > 200:
         raise ValueError("Image too bright. Please re-upload a clear picture.")
-
     
     return True
 
