@@ -1,4 +1,4 @@
-import chromadb
+from rag.vector_database import Database 
 import uuid
 import pandas as pd
 import json
@@ -8,12 +8,10 @@ with open("config/config.json", "r") as config:
 
 class IngestKnowledge:
 
-    def __init__(self, ingredients):
-        self.ingredients = ingredients
-        # self.client = chromadb.PersistentClient(path="./chroma_db")
+    def __init__(self, database):
+        self.database = database
 
-    def start_ingestion(self):
-        ingredients = self.ingredients
+    def start_ingestion(self, ingredients):
         documents = []
 
         for _, ingredient in ingredients.iterrows():
@@ -37,18 +35,18 @@ class IngestKnowledge:
             }
 
             documents.append({
-                "id": uuid.uuid4(),
+                "id": str(uuid.uuid4()),
                 "content" : text_to_embed,
                 "metadata" : metadata
             })
 
-        print(documents[:2])
-
-        # collection = self.client.get_or_create_collection(name="ingredient_knowledge")
+        self.database.add_documents(documents)
 
 # Testing purposes
 if __name__ == "__main__":
 
     ingredients = pd.read_csv(CONFIG.get("ingredient_knowledge_path"))
-    ingestion = IngestKnowledge(ingredients)
-    ingestion.start_ingestion()
+    database = Database()
+    
+    ingestion = IngestKnowledge(database=database)
+    ingestion.start_ingestion(ingredients)

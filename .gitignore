@@ -36,3 +36,4 @@ conda-meta/
 testing/
 model/
 data/
+chroma_db/
