@@ -34,6 +34,7 @@ conda-meta/
 .env
 
 testing/
-model/
+model/face_detection
 data/
 chroma_db/
+classifier/

@@ -11,5 +11,6 @@
         "caution" : -1,
         "avoid" : -2
     },
-    "skin_condition_identifier_threshold" : 0.60
+    "skin_condition_identifier_threshold" : 0.50,
+    "num_top_products" : 5
 }

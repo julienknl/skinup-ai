@@ -5,6 +5,9 @@ import json
 with open("config/config.json", "r") as config:
     CONFIG = json.load(config)
 
+products = pd.read_csv(CONFIG.get("product_path"))
+ingredient_knowledge = pd.read_csv(CONFIG.get("ingredient_knowledge_path"))
+
 def __clean_ingredients(ingredients):
     with open(CONFIG.get("aliases"), "r", encoding="utf-8") as file:
         aliases = json.load(file)
@@ -15,9 +18,7 @@ def __clean_ingredients(ingredients):
     return ingredients
 
 def get_top_products(skin_condition):
-    products = pd.read_csv(CONFIG.get("product_path"))
-    ingredient_knowledge = pd.read_csv(CONFIG.get("ingredient_knowledge_path"))
-
+    
     # Select ingredients useful for the identified skin condition
     selected_ingredients = ingredient_knowledge[ingredient_knowledge["condition"] == skin_condition]
     selected_ingredients["scores"] = selected_ingredients["recommendation_role"].map(CONFIG.get("recommended_role_scores"))
@@ -33,14 +34,22 @@ def get_top_products(skin_condition):
 
         matched_rows = selected_ingredients[selected_ingredients["ingredient"].isin(matched_ing)]
         score_results.append({"product_name" : product["product_name"],
+                              "matched_ingredients" : matched_ing,
                               "score" : matched_rows["scores"].sum()})
 
     top_products = sorted(score_results, 
                           key=lambda product: product["score"],
-                          reverse=True)[:5]
+                          reverse=True)[:CONFIG.get("num_top_products")]
 
-    return top_products
+    unique_products = []
+
+    for product in top_products:
+        if not any(p["product_name"] == product['product_name'] for p in unique_products):
+            unique_products.append(product)
+    
+    return unique_products
 
 
 if __name__ == "__main__":
-    get_top_products("oily")
+    top_products = get_top_products("acne")
+    print(top_products)
