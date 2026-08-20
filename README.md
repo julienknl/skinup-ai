@@ -1,5 +1,7 @@
 # Skinup AI
 
+![Skinup AI System Architecture](assets/diagram/skinup_architecture.png)
+
 ## Introduction
 
 Skinup AI is a minimum viable product (MVP) that analyses a skin image, identifies a likely skin condition, scores skincare products by relevant ingredients, retrieves supporting ingredient information, and uses a local large language model (LLM) to turn the results into a user-friendly report.
