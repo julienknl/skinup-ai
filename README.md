@@ -1,6 +1,6 @@
 # Skinup AI
 
-![Skinup AI System Architecture](assets/diagram/skinup_architecture.png)
+![Skinup AI System Architecture](assets/diagram/skinupai_diagram.png)
 
 ## Introduction
 
