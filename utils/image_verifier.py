@@ -1,7 +1,12 @@
 import cv2
+import numpy as np
 
-def is_validate(image_path):
-    img = cv2.imread(image_path)
+def is_validate(raw_img):
+
+    img = cv2.cvtColor(
+        np.array(raw_img),
+        cv2.COLOR_RGB2BGR
+    )
 
     # 1. Image size verification
     height, width = img.shape[:2]
