@@ -1,7 +1,10 @@
 import cv2
 import numpy as np
+import time
 
 def is_validate(raw_img):
+
+    start_time = time.perf_counter()
 
     img = cv2.cvtColor(
         np.array(raw_img),
@@ -22,8 +25,11 @@ def is_validate(raw_img):
         raise ValueError("Image too dark. Please re-upload a clear picture.")
     elif gray_img.mean() > 200:
         raise ValueError("Image too bright. Please re-upload a clear picture.")
+
+    end_time = time.perf_counter()
+    total_time = end_time - start_time
     
-    return True
+    return True, total_time
 
 # This function is only used for testing
 def __resize(image_path):

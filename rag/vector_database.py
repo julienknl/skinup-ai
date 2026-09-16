@@ -15,8 +15,8 @@ class Database:
             self.collection.add(ids=[document["id"] for document in documents],
                 documents=[document["content"] for document in documents],
                 metadatas=[document["metadata"] for document in documents])
-        except ValueError as e:
-            print(f"Error: {e}")
+        except Exception as e:
+            raise ValueError(str(e))
 
     def retrieve(self, queries, n_results=1, where=None):
         """
@@ -37,4 +37,4 @@ class Database:
             return results
         
         except Exception as e:
-            print(f"Error: {e}")
+            raise ValueError(str(e))
