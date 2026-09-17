@@ -33,7 +33,7 @@ conda-meta/
 # Environment variables
 .env
 
-testing/
+tmp/
 model/face_detection
 data/
 chroma_db/

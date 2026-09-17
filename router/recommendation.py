@@ -8,7 +8,12 @@ router = APIRouter()
 @router.post("/recommend_product")
 async def recommend_product(file: UploadFile= File(...)):
     try:
+        allowed_type = ["image/jpeg", "image/png"]
+        if file.content_type not in allowed_type:
+                raise ValueError("Only images with format JPG and PNG are allowed.")
+        
         content = await file.read()
+        
         image = Image.open(BytesIO(content)).convert("RGB")
         result = recommend_products(image=image)
 
