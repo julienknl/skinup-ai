@@ -12,5 +12,6 @@
         "avoid" : -2
     },
     "skin_condition_identifier_threshold" : 0.50,
-    "num_top_products" : 5
+    "num_top_products" : 5,
+    "target_image_resolution" : 512
 }
