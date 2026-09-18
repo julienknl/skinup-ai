@@ -59,6 +59,7 @@ def _validate_image(image, request_id):
         return is_validated, validate_compute_time
     except ValueError as e:
         logger.warning("[%s] Validation error: %s", request_id, e)
+        raise
 
 
 def _get_skin_condition(image, request_id):
@@ -81,6 +82,7 @@ def _get_skin_condition(image, request_id):
         return skin_condition, compute_time
     except Exception as e:
         logger.warning("[%s] Skin condition analysis error: %s", request_id, e)
+        raise
 
 def _get_top_products(skin_condition, request_id):
 
@@ -110,6 +112,7 @@ def _get_top_products(skin_condition, request_id):
     
     except Exception as e:
         logger.warning("[%s] Top products retrieval error: %s", request_id, e)
+        raise
     
 
 def _retrieve_ingredients_purpose(skin_condition, ingredients, request_id):
@@ -131,6 +134,7 @@ def _retrieve_ingredients_purpose(skin_condition, ingredients, request_id):
         return retrieve_results, total_time
     except ValueError as e:
         logger.warning("[%s] Knowledge retrieval error: %s", request_id, e)
+        raise
 
     
 
@@ -147,6 +151,7 @@ def _llm_response(context, request_id):
         return result, total_time
     except Exception as e:
         logger.warning("[%s] LLM inference error: %s", request_id, e)
+        raise
 
 def _log(request_id, validate_time, analyser_inference_time, top_products_time, retrieval_time, llm_inference_time):
     logger.info("""[%s] Skin analysis and product recommendation completed | 
